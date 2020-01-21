@@ -1,61 +1,39 @@
 <?php
 class Car{
-  private $obj;
-  public function __construct($obj){
-      $this->obj = $obj;
-  }
-  public function getCar(CarI $car){
-      if($car == 'miniven'){
-          $this->obj = new Miniven();
-      }
-      else if($car == 'pass'){
-          $this->obj = new PassengerCar();
-      }
-      else if($car == 'truck'){
-          $this->obj = new Truck();
-      }
-      else{
-        throw new \Exception('no such a car');
-      }
-      return $obj;
-  }
-  
-  public function __clone(){
-      if(isset($this->obj)){
-        $this->obj = clone $this->obj;   
-      }
-  }
+    private $weight;
+    public $number;
+    public $color;
+    
+    public function getMiniven()
+    {
+        $this->weight = 200;
+        return $this;
+    }
+    
+    public function getPassengerCar()
+    {
+        $this->weight = 100;
+        return $this;
+    }
+    
+    public function getTruck()
+    {
+        $this->weight = 500;
+        return $this;
+    }
+    
+    public function getWeight(){
+        return $this->weight;
+    }
 }
 
-interface CarI{
-    public function __clone();
-}
+$miniven = (new Car())->getMiniven();
+$miniven->number = '1234';
+$miniven->color = 'red';
+var_dump($miniven);
 
-class Miniven implements CarI{
-  private $weight;
-  public function __clone(){
-      $this->weight = 200;
-  } 
-}
+$mini = clone $miniven;
+var_dump($mini);
 
-class PassengerCar implements CarI{
-  private $weight;
-  public function __clone(){
-      $this->weight = 100;
-  } 
-}
-
-class Truck implements CarI{
-  private $weight;
-  public function __clone(){
-      $this->weight = 500;
-  } 
-}
-
-$car = new Car(new Miniven());
-var_dump($car);
-$car1 = clone $car;
-$car2 = clone $car1;
-var_dump($car1);
-var_dump($car2);
-
+$passCar = (new Car())->getPassengerCar();
+var_dump($passCar);
